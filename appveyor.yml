@@ -2,11 +2,14 @@ version: '{build}'
 os: Visual Studio 2017
 install:
 - set PATH=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\;%PATH%
+- ps: Install-Product node 6
+- npm install --global npm
 before_build:
 - cmd: dotnet --info
+- cmd: del "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets"
 build:
   project: build.proj
-  verbosity: detailed
+  verbosity: normal
 test_script:
 - dotnet test --configuration Release --no-build tests/React.Tests
 artifacts:
